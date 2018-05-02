@@ -1,0 +1,28 @@
+{
+  "name": "scrum-board-api",
+  "version": "1.0.0",
+  "description": "Scrum board api",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "nodemon app.js && mongod"
+  },
+  "author": "glazunov_ds",
+  "license": "ISC",
+  "dependencies": {
+    "Express": "^3.0.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.4",
+    "mongoose": "^5.0.9",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "nodemon": "^1.17.1"
+  }
+}
