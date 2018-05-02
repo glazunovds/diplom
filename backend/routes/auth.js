@@ -20,7 +20,12 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/me', (req, res) => {
-    res.end(JSON.stringify(req.user || {}));
+    if (req.isAuthenticated()) {
+        res.end(JSON.stringify(req.user));
+    }
+    else {
+        res.status(401).end(JSON.stringify(createError(401)));
+    }
 });
 
 router.get('/unauthorized', (req, res) => {
