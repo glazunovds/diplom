@@ -2,24 +2,27 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/unauthorized');
 
 mongoose.connect('mongodb://admin:admin@ds111370.mlab.com:11370/diplom');
 
 const User = require('./models/User');
 
-const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const projectsRouter = require('./routes/projects');
 
 const app = express();
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(logger('dev'));
+app.use(bodyParser.json({strict: false}));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(session({
@@ -38,15 +41,51 @@ passport.use(new Auth0Strategy({
     responseType: 'code',
     scope: 'openid profile email',
 }, (accessToken, refreshToken, extraParams, profile, done) => {
-    return done(null, profile);
+    try {
+        User.findOne({'auth0_id': profile.id}, (err, user) => {
+            if (err) {
+                console.error(err);
+                return done(err);
+            }
+
+            if (!user) {
+                new User({
+                    auth0_id: profile.id,
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                })
+                    .save((err, user) => {
+                        if (err) {
+                            console.error(err);
+                        }
+                        done(null, user);
+                    });
+
+            }
+            else {
+                done(null, user);
+            }
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
 }));
 
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+    User.findById(id, done);
+});
+
 app.use('/', authRouter);
-app.use('/', indexRouter);
+app.use('/projects',/* ensureLoggedIn,*/ projectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+    res.status(404).end(JSON.stringify(createError(404)));
 });
 
 // error handler
