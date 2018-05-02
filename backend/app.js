@@ -9,6 +9,7 @@ const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/unauthorized');
+const cors = require('cors');
 
 mongoose.connect('mongodb://admin:admin@ds111370.mlab.com:11370/diplom');
 
@@ -21,6 +22,7 @@ const app = express();
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json({strict: false}));
 app.use(express.json());
