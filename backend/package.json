@@ -1,28 +1,25 @@
 {
-  "name": "scrum-board-api",
-  "version": "1.0.0",
-  "description": "Scrum board api",
-  "main": "app.js",
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node app.js",
-    "watch": "nodemon app.js && mongod"
+    "start": "node ./bin/www"
   },
-  "author": "glazunov_ds",
-  "license": "ISC",
   "dependencies": {
-    "Express": "^3.0.1",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "mongodb": "^3.0.4",
-    "mongoose": "^5.0.9",
-    "morgan": "^1.9.0"
-  },
-  "devDependencies": {
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "nodemon": "^1.17.1"
+    "auth0": "^2.9.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "^2.5.9",
+    "express": "~4.16.0",
+    "express-jwt": "^5.3.1",
+    "express-jwt-authz": "^1.0.0",
+    "express-session": "^1.15.6",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "jwks-rsa": "^1.2.1",
+    "mongoose": "^5.0.17",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1"
   }
 }
