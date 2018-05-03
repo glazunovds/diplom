@@ -50,13 +50,6 @@ router.put('/:project_id/tasks/:task_id', async (req, res, next) => {
     try {
         let task = await Task.findByIdAndUpdate(req.params.task_id, req.body, {new: true});
 
-        if ('project_id' in req.body && req.body.project_id !== req.params.project_id) {
-            await Promise.all([
-                removeTaskFromProject(req.params.project_id, req.params.task_id),
-                addTaskToProject(req.body.project_id, req.params.task_id),
-            ]);
-        }
-
         res.end(JSON.stringify(task));
     }
     catch (err) {
