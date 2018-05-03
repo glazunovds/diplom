@@ -24,6 +24,10 @@ import {
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { AddProjectComponent } from './add-project/add-project.component';
+import { JoinProjectComponent } from './join-project/join-project.component';
+import { AddTaskComponent } from './add-task/add-task.component';
+import {AppService} from './services/app.service';
 
 @NgModule({
   declarations: [
@@ -32,10 +36,16 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     CallbackComponent,
     TasksListComponent,
     ProjectsListComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    AddProjectComponent,
+    JoinProjectComponent,
+    AddTaskComponent
   ],
   entryComponents: [
-    EditTaskComponent
+    EditTaskComponent,
+    AddProjectComponent,
+    JoinProjectComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +69,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     MatDialogModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [AuthService],
+  providers: [AuthService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

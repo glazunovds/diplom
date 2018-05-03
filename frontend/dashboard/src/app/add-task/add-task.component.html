@@ -2,10 +2,10 @@
 <mat-dialog-content>
   <div class="content-wrapper">
     <mat-form-field>
-      <input matInput placeholder="Создал" value='{{data.author}}' disabled>
+      <input matInput placeholder="Создал">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Дата создания" value='{{data.created}}' disabled>
+      <input matInput placeholder="Дата создания">
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Назначена" [value]='1'>
@@ -24,10 +24,10 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Название" value='{{data.title}}'>
+      <input matInput placeholder="Название">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput placeholder="Описание" rows="4">{{data.description}}</textarea>
+      <textarea matInput placeholder="Описание" rows="4"></textarea>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Статус" [value]='1'>
@@ -40,6 +40,6 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-raised-button color='primary'>Редактировать</button>
+  <button mat-raised-button color='primary'>Добавить</button>
   <button mat-raised-button (click)="closeDialog()">Отмена</button>
 </mat-dialog-actions>
