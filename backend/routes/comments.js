@@ -27,6 +27,7 @@ router.post('/:project_id/tasks/:task_id/comments', async (req, res, next) => {
         let {text} = req.body;
 
         let comment = await new Comment({
+            author_id: req.user._id,
             text,
         }).save();
 
