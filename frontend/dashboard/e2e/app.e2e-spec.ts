@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import { CentralizedLoginPage } from './app.po';
 
-describe('dashboard App', () => {
-  let page: AppPage;
+describe('centralized-login App', () => {
+  let page: CentralizedLoginPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new CentralizedLoginPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });

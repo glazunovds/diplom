@@ -3,6 +3,7 @@ const passport = require('passport');
 const createError = require('http-errors');
 
 /*router.get('/login', passport.authenticate('auth0', {}), (req, res) => {
+    console.log(req, res);
     res.redirect('//localhost:3000/');
 });
 
