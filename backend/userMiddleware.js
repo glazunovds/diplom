@@ -1,5 +1,14 @@
 const User = require('./models/User');
 
+const ManagementClient = require('auth0').ManagementClient;
+
+const auth = new ManagementClient({
+    domain: 'glazunov.eu.auth0.com',
+    clientId: '38kYWZEnammXWakaZTnBlV8cgEgYuqVK',
+    clientSecret: 'T4IX6UwzDLEJQvyITHCBuPwLhpdBTZK4RKK7LFm_Na4YP_MY_ZpctqCfuQTsJjOp',
+    scope: 'read:users',
+});
+
 module.exports = async (req, res, next) => {
     let profile = req.user;
 
@@ -7,8 +16,11 @@ module.exports = async (req, res, next) => {
         let user = await User.findOne({auth0_id: profile.sub});
 
         if (!user) {
+            profile = await auth.getUser({id: profile.sub});
+            console.log(profile);
+
             user = await new User({
-                auth0_id: profile.sub,
+                auth0_id: profile.user_id,
                 name: profile.name,
                 email: profile.email,
             }).save();
@@ -21,6 +33,7 @@ module.exports = async (req, res, next) => {
         });
     }
     catch (err) {
+        console.error(err);
         next(err);
     }
 };
