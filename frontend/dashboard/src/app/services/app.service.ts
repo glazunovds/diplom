@@ -1,25 +1,30 @@
 import { Injectable } from '@angular/core';
-import {Http} from "@angular/http";
+import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AppService {
 
   constructor(private http: Http) { }
 
-  addProject(title: string, description: string): Observable<Response> {
-    return this.http.post('//localhost:3001/projects', {title: title, description: description});
+  public addProject(title: string, description: string): Observable<any> {
+    return this.http.post('//localhost:3001/projects', {title: title, description: description})
+      .map((response) => response.json());
   }
 
-  getProjectById(id: number): Observable<Response> {
-    return this.http.get(`//localhost:3001/projects/${id}`);
+  public getProjectById(id: number): Observable<any> {
+    return this.http.get(`//localhost:3001/projects/${id}`)
+      .map((response) => response.json());
   }
 
-  getProjectById(id: number, newItems: any): Observable<Response> {
-    return this.http.put(`//localhost:3001/projects/${id}`, newItems);
+  public updateProjectById(id: number, newItems: any): Observable<any> {
+    return this.http.put(`//localhost:3001/projects/${id}`, newItems)
+      .map((response) => response.json());
   }
 
-  deleteProjectById(id: number): Observable<Response> {
-    return this.http.delete(`//localhost:3001/projects/${id}`);
+  public deleteProjectById(id: number): Observable<any> {
+    return this.http.delete(`//localhost:3001/projects/${id}`)
+      .map((response) => response.json());
   }
 }
