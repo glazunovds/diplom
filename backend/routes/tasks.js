@@ -3,6 +3,8 @@ const router = require('express').Router();
 const Task = require('../models/Task');
 const Project = require('../models/Project');
 
+const attachmentsRouter = require('./attachments');
+
 function addTaskToProject(project_id, task_id) {
     return Project.updateOne({_id: project_id}, {$addToSet: {task_ids: task_id}});
 }
@@ -73,5 +75,7 @@ router.delete('/:project_id/tasks/:task_id', async (req, res, next) => {
         next(err);
     }
 });
+
+router.use(attachmentsRouter);
 
 module.exports = router;
