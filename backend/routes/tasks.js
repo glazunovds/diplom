@@ -33,6 +33,17 @@ router.post('/:project_id/tasks', async (req, res, next) => {
     }
 });
 
+router.get('/:project_id/tasks/:task_id', async (req, res, next) => {
+    try {
+        let task = await Task.findById(req.params.task_id);
+
+        res.end(JSON.stringify(task));
+    }
+    catch (err) {
+        next(err);
+    }
+});
+
 router.put('/:project_id/tasks/:task_id', async (req, res, next) => {
     try {
         let task = await Task.findByIdAndUpdate(req.params.task_id, req.body, {new: true});
