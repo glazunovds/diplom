@@ -3,6 +3,8 @@ const router = require('express').Router();
 const Project = require('../models/Project');
 const User = require('../models/User');
 
+const tasksRouter = require('./tasks');
+
 router.post('/', async (req, res, next) => {
     try {
         let project = await new Project({
@@ -17,7 +19,6 @@ router.post('/', async (req, res, next) => {
         res.end(JSON.stringify(project));
     }
     catch (err) {
-        console.error(err);
         next(err);
     }
 });
@@ -60,5 +61,7 @@ router.put('/:project_id/users/:user_id', (req, res, next) => {
         res.end(JSON.stringify(project));
     });
 });
+
+router.use(tasksRouter);
 
 module.exports = router;

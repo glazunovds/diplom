@@ -17,7 +17,6 @@ module.exports = async (req, res, next) => {
 
         if (!user) {
             profile = await auth.getUser({id: profile.sub});
-            console.log(profile);
 
             user = await new User({
                 auth0_id: profile.user_id,
