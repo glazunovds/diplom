@@ -28,6 +28,7 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { JoinProjectComponent } from './join-project/join-project.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import {AppService} from './services/app.service';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {AppService} from './services/app.service';
     MatProgressSpinnerModule,
     MatListModule,
     MatDialogModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [AuthService, AppService],

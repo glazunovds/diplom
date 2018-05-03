@@ -15,16 +15,28 @@ import {AppService} from './services/app.service';
 })
 export class AppComponent {
 
+  user: any;
+  projects: any;
+
   constructor(public auth: AuthService,
               public router: Router,
               public dialog: MatDialog,
               public http: Http,
               public service: AppService) {
     auth.handleAuthentication();
-    http.get('http://127.0.0.1:3001/me').subscribe(res => console.log(res));
+    service.getUser(localStorage.getItem('id_token')).subscribe(() => {
+      service.user.project_ids.forEach(projectId => {
+        service.getProject(projectId, localStorage.getItem('id_token')).subscribe();
+      });
+    });
+    service.changes.subscribe(() => {
+      console.log('changes');
+      this.user = service.user;
+      this.projects = service.projects;
+    })
   }
 
-  addProject() {
+  public addProject(): void {
     const dialogRef = this.dialog.open(AddProjectComponent, {
       width: '500px'
     });
@@ -34,7 +46,7 @@ export class AppComponent {
     });
   }
 
-  joinProject() {
+  public joinProject(): void {
     const dialogRef = this.dialog.open(JoinProjectComponent, {
       width: '500px'
     });
@@ -44,11 +56,11 @@ export class AppComponent {
     });
   }
 
-  login() {
+  public login(): void {
     location.href = '//localhost:3001/login';
   }
 
-  addTask() {
+  public addTask(): void {
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '900px'
     });
@@ -57,5 +69,4 @@ export class AppComponent {
       // console.log('The dialog was closed');
     });
   }
-
 }

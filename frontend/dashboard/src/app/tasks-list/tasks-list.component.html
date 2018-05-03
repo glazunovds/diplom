@@ -1,43 +1,58 @@
 <div class="wrapper">
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
-  <div class="example-container mat-elevation-z8">
-    <mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="id">
-        <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-        <mat-cell class='id-cell' *matCellDef="let row" (click)='editTask(row)'> {{row.id}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="author">
-        <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Автор </mat-header-cell>
-        <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.author}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="assignee">
-        <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Назначено </mat-header-cell>
-        <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.assignee}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="created">
-        <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Время создания </mat-header-cell>
-        <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.created}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Название </mat-header-cell>
-        <mat-cell *matCellDef="let row" (click)='editTask(row)'> {{row.title}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Статус </mat-header-cell>
-        <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.status}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="priority">
-        <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Приоритет </mat-header-cell>
-        <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.priority}} </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;">
-      </mat-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[20, 50, 100]"></mat-paginator>
+  <mat-card class='project-info'>
+    <mat-card-header><div class='font-bold'>Название проекта:</div> {{getCurrentProject().title}}</mat-card-header>
+    <mat-card-content>
+      <mat-list role="list">
+        <mat-list-item role="listitem"><div class='font-bold'>Дата создания:</div> {{getProjectDate()}}</mat-list-item>
+        <mat-list-item role="listitem"><div class='font-bold'>Автор:</div> </mat-list-item>
+        <mat-list-item role="listitem"><div class='font-bold'>Описание:</div> {{getCurrentProject().description}}</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="accent" (click)='deleteProject()'>Удалить</button>
+    </mat-card-actions>
+  </mat-card>
+  <div class="tasks-list">
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <mat-header-cell class='id-cell' *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+          <mat-cell class='id-cell' *matCellDef="let row" (click)='editTask(row)'> {{row.id}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="author">
+          <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Автор </mat-header-cell>
+          <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.author}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assignee">
+          <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Назначено </mat-header-cell>
+          <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.assignee}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="created">
+          <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Время создания </mat-header-cell>
+          <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.created}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Название </mat-header-cell>
+          <mat-cell *matCellDef="let row" (click)='editTask(row)'> {{row.title}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Статус </mat-header-cell>
+          <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.status}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="priority">
+          <mat-header-cell class='cell-width' *matHeaderCellDef mat-sort-header> Приоритет </mat-header-cell>
+          <mat-cell class='cell-width' *matCellDef="let row" (click)='editTask(row)'> {{row.priority}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[20, 50, 100]"></mat-paginator>
+    </div>
   </div>
 </div>

@@ -5,10 +5,7 @@
         <button  mat-button *ngIf='!auth.isAuthenticated()' (click)="auth.login()" type="button">Войти</button>
         <button  mat-button *ngIf='auth.isAuthenticated()' [matMenuTriggerFor]="menu" type="button">Проекты</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/projects/1/tasks" type="button">Project 1</button>
-          <button mat-menu-item routerLink="/projects/2/tasks" type="button">Project 2</button>
-          <button mat-menu-item routerLink="/projects/3/tasks" type="button">Project 3</button>
-          <button mat-menu-item routerLink="/projects/4/tasks" type="button">Project 4</button>
+          <button *ngFor='let project of projects' mat-menu-item routerLink='/projects/{{project._id}}/tasks' type="button">{{project.title}}</button>
           <button mat-menu-item type="button" (click)="addProject()">Добавить</button>
           <button mat-menu-item type="button" (click)="joinProject()">Присоединиться</button>
         </mat-menu>
@@ -18,6 +15,6 @@
   </div>
 </nav>
 
-<main role="main" class="container">
+<main role="main" class="container-fluid">
   <router-outlet></router-outlet>
 </main>

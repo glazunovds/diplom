@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {EditTaskComponent} from '../edit-task/edit-task.component';
 
 @Component({
   selector: 'app-add-task',
@@ -13,7 +12,7 @@ export class AddTaskComponent {
     public dialogRef: MatDialogRef<AddTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  closeDialog(): void {
+  public closeDialog(): void {
     this.dialogRef.close();
   }
 
