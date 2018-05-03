@@ -8,10 +8,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/unauthorized');
 const cors = require('cors');
 const jwt = require('express-jwt');
-const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa');
 
 mongoose.connect('mongodb://admin:admin@ds111370.mlab.com:11370/diplom');
