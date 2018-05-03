@@ -1,13 +1,12 @@
 const router = require('express').Router();
 
 const Project = require('../models/Project');
-const User = require('../models/User');
 
 router.post('/', (req, res, next) => {
     try {
         new Project({
-            author_id: req.user.id,
-            user_ids: [req.user.id],
+            author_id: req.user._id,
+            user_ids: [req.user._id],
             title: req.body.title,
             description: req.body.description,
         }).save((err, project) => {

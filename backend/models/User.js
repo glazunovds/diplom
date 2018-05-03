@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         default: [],
     },
-    
+}, {
+    versionKey: false,
 });
 
 module.exports = mongoose.model('users', UserSchema);

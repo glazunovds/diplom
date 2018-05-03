@@ -10,8 +10,13 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/unauthorized');
 const cors = require('cors');
+const jwt = require('express-jwt');
+const jwtAuthz = require('express-jwt-authz');
+const jwksRsa = require('jwks-rsa');
 
 mongoose.connect('mongodb://admin:admin@ds111370.mlab.com:11370/diplom');
+
+const userMiddleware = require('./userMiddleware');
 
 const User = require('./models/User');
 
@@ -43,47 +48,32 @@ passport.use(new Auth0Strategy({
     responseType: 'code',
     scope: 'openid profile email',
 }, (accessToken, refreshToken, extraParams, profile, done) => {
-    try {
-        User.findOne({'auth0_id': profile.id}, (err, user) => {
-            if (err) {
-                console.error(err);
-                return done(err);
-            }
-
-            if (!user) {
-                new User({
-                    auth0_id: profile.id,
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                })
-                    .save((err, user) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        done(null, user);
-                    });
-
-            }
-            else {
-                done(null, user);
-            }
-        });
-    }
-    catch (e) {
-        console.error(e);
-    }
+    done(null, profile);
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id, done);
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
+
+const checkJwt = jwt({
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://glazunov.eu.auth0.com/.well-known/jwks.json`
+    }),
+    algorithms: ['RS256']
+});
+
+app.use(checkJwt);
+app.use(userMiddleware);
 
 app.use('/', authRouter);
-app.use('/projects',/* ensureLoggedIn,*/ projectsRouter);
+app.use('/projects', projectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
