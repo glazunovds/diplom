@@ -1,0 +1,45 @@
+<div class='edit-title' md-dialog-title></div>
+<mat-dialog-content>
+  <div class="content-wrapper">
+    <mat-form-field>
+      <input matInput placeholder="Создал" value='{{data.author}}' disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Дата создания" value='{{data.created}}' disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Назначена" [value]='1'>
+        <mat-option [value]="1">Дима</mat-option>
+        <mat-option [value]="2">Даниил</mat-option>
+        <mat-option [value]="3">Арканыч</mat-option>
+        <mat-option [value]="4">Глеб</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Приоритет" [value]='1'>
+        <mat-option [value]="1">Низкий</mat-option>
+        <mat-option [value]="2">Нормальный</mat-option>
+        <mat-option [value]="3">Высокий</mat-option>
+        <mat-option [value]="4">Срочный</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Название" value='{{data.title}}'>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Описание">{{data.description}}</textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Статус" [value]='1'>
+        <mat-option [value]="1">Новая</mat-option>
+        <mat-option [value]="2">В работе</mat-option>
+        <mat-option [value]="3">Решена</mat-option>
+        <mat-option [value]="4">Закрыта</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color='primary'>Редактировать</button>
+  <button mat-raised-button (click)="closeDialog()">Отмена</button>
+</mat-dialog-actions>
