@@ -1,0 +1,36 @@
+.wrapper {
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-height: 500px;
+}
+
+.id-cell {
+  max-width: 50px;
+}
+
+.mat-row:hover {
+  background: #e2e2e2;
+  cursor: pointer;
+}
+
+.cell-width {
+  max-width: 120px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+}

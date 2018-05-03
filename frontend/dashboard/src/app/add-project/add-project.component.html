@@ -1,0 +1,15 @@
+<div class='edit-title' md-dialog-title></div>
+<mat-dialog-content>
+  <div class="content-wrapper">
+    <mat-form-field>
+      <input #title matInput placeholder="Название">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea #description matInput placeholder="Описание" rows="4"></textarea>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="addProject(title.value, description.value)" color='primary'>Добавить</button>
+  <button mat-raised-button (click)="closeDialog()">Отмена</button>
+</mat-dialog-actions>
