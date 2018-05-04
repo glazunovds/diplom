@@ -20,6 +20,7 @@ const User = require('./models/User');
 
 const authRouter = require('./routes/auth');
 const projectsRouter = require('./routes/projects');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use(userMiddleware);
 
 app.use('/', authRouter);
 app.use('/projects', projectsRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
