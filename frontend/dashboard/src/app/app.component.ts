@@ -24,13 +24,14 @@ export class AppComponent {
               public http: Http,
               public service: AppService) {
     auth.handleAuthentication();
-    service.getUser(localStorage.getItem('id_token')).subscribe(() => {
-      service.user.project_ids.forEach(projectId => {
-        service.getProject(projectId, localStorage.getItem('id_token')).subscribe();
+    if (auth.isAuthenticated()) {
+      service.getUser(localStorage.getItem('id_token')).subscribe(() => {
+        service.user.project_ids.forEach(projectId => {
+          service.getProject(projectId, localStorage.getItem('id_token')).subscribe();
+        });
       });
-    });
+    }
     service.changes.subscribe(() => {
-      console.log('changes');
       this.user = service.user;
       this.projects = service.projects;
     })
@@ -48,7 +49,7 @@ export class AppComponent {
 
   public joinProject(): void {
     const dialogRef = this.dialog.open(JoinProjectComponent, {
-      width: '500px'
+      width: '650px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

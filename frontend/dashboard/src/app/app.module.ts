@@ -29,6 +29,7 @@ import { JoinProjectComponent } from './join-project/join-project.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import {AppService} from './services/app.service';
 import {HttpClientModule} from "@angular/common/http";
+import { JoinProjectPageComponent } from './join-project-page/join-project-page.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {HttpClientModule} from "@angular/common/http";
     EditTaskComponent,
     AddProjectComponent,
     JoinProjectComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    JoinProjectPageComponent
   ],
   entryComponents: [
     EditTaskComponent,

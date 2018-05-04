@@ -64,4 +64,12 @@ export class AppService {
     return this.http.get(`//localhost:3001/me/`, {headers})
       .map(res => {this.user = res; this.changes.next(); });
   }
+
+  public joinProject(token: string, projectId: string): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`);
+    return this.http.put(`//localhost:3001/projects/${projectId}/users/${this.user._id}`, {}, {headers})
+      .map(res => { console.log(res); this.changes.next(); return res; });
+
+  }
 }

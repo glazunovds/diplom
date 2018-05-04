@@ -69,8 +69,12 @@ export class TasksListComponent implements AfterViewInit, OnInit, OnDestroy {
     return _.find(this.service.projects, {_id: this.router.url.split('/')[2]}) || {title: '', description: '', created_at: Date.now()};
   }
 
+  public getUserById(): string {
+    return '.!.';
+  }
+
   public getProjectDate(): string {
-    return moment(this.getCurrentProject().created_at).format('HH.mm.ss DD.MM.YYYY');
+    return moment(this.getCurrentProject().created_at).format('HH.mm DD.MM.YYYY');
   }
 
   public editTask(row): void {
