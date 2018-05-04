@@ -5,6 +5,14 @@ const User = require('../models/User');
 
 const tasksRouter = require('./tasks');
 
+function addProjectToUser(user_id, project_id) {
+    return User.updateOne({_id: user_id}, {$addToSet: {project_ids: project_id}});
+}
+
+function removeProjectFromUser(user_id, project_id) {
+    return User.updateOne({_id: user_id}, {$pull: {project_ids: project_id}});
+}
+
 router.post('/', async (req, res, next) => {
     try {
         let project = await new Project({
@@ -44,8 +52,10 @@ router.put('/:project_id', async (req, res, next) => {
 
 router.delete('/:project_id', async (req, res, next) => {
     try {
-        let project = await Project.findByIdAndRemove(req.params.project_id);
-        await User.updateOne({_id: project.author_id}, {$pull: {project_ids: project._id}});
+        let {project_id} = req.params;
+
+        let project = await Project.findByIdAndRemove(project_id);
+        await removeProjectFromUser(req.user._id, project_id);
 
         res.end(JSON.stringify(project));
     }
@@ -54,12 +64,32 @@ router.delete('/:project_id', async (req, res, next) => {
     }
 });
 
-router.put('/:project_id/users/:user_id', (req, res, next) => {
-    Project.findOneAndUpdate(req.params.project_id, {$addToSet: {user_ids: req.params.user_id}}, {new: true}, (err, project) => {
-        if (err) return next(err);
+router.put('/:project_id/users/:user_id', async (req, res, next) => {
+    try {
+        let {project_id, user_id} = req.params;
+
+        let project = await Project.findOneAndUpdate(project_id, {$addToSet: {user_ids: user_id}}, {new: true});
+        await addProjectToUser(user_id, project_id);
 
         res.end(JSON.stringify(project));
-    });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:project_id/users/:user_id', async (req, res, next) => {
+    try {
+        let {project_id, user_id} = req.params;
+
+        let project = await Project.findOneAndUpdate(project_id, {$pull: {user_ids: user_id}}, {new: true});
+        await removeProjectFromUser(user_id, project_id);
+
+        res.end(JSON.stringify(project));
+    }
+    catch (err) {
+        next(err);
+    }
 });
 
 router.use(tasksRouter);
