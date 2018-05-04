@@ -28,6 +28,8 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { JoinProjectComponent } from './join-project/join-project.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import {AppService} from './services/app.service';
+import {HttpClientModule} from "@angular/common/http";
+import { JoinProjectPageComponent } from './join-project-page/join-project-page.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {AppService} from './services/app.service';
     EditTaskComponent,
     AddProjectComponent,
     JoinProjectComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    JoinProjectPageComponent
   ],
   entryComponents: [
     EditTaskComponent,
@@ -67,6 +70,7 @@ import {AppService} from './services/app.service';
     MatProgressSpinnerModule,
     MatListModule,
     MatDialogModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [AuthService, AppService],
