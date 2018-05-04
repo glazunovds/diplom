@@ -19,6 +19,7 @@ export class TasksListComponent implements AfterViewInit, OnInit, OnDestroy {
   project: any = {title: '', description: ''};
   createdAt: any;
   user: any;
+  author: any = {name: ''};
   changesSub: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -66,11 +67,8 @@ export class TasksListComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public getCurrentProject(): any {
+    console.log(123);
     return _.find(this.service.projects, {_id: this.router.url.split('/')[2]}) || {title: '', description: '', created_at: Date.now()};
-  }
-
-  public getUserById(): string {
-    return '.!.';
   }
 
   public getProjectDate(): string {

@@ -72,4 +72,11 @@ export class AppService {
       .map(res => { console.log(res); this.changes.next(); return res; });
 
   }
+
+  public getUserById(token: string, userId: string): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`);
+    return this.http.get(`//localhost:3001/users/${userId}`, {headers})
+      .map(res => { console.log(res); return res; });
+  }
 }
